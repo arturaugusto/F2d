@@ -66,4 +66,12 @@ const bottomTrim = (chunks, threshold) => {
 
 const leftRightTopBottomTrimmed = bottomTrim(leftRightTopTrimmed)
 // [[1,1],[0,0],[1,1]]
+
+const slice2d = (chunks, y0, y1, x0, x1) => {
+  return chunks.slice(y0, y1).map(row => row.slice(x0, x1))
+}
+
+const slice = slice2d(chunks, 3, 5, 1, 3)
+// [[1,1],[0,0]]
+
 ```
