@@ -14,9 +14,10 @@ const intoChunks = (arr, sizes) => {
 const chunks = intoChunks(arr, 4)
 //[[0,0,0,0],[0,1,1,0],[0,0,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]
 
-const leftTrim = (chunks) => {
+const leftTrim = (chunks, threshold) => {
+  threshold = threshold === undefined ? 1 : threshold
   for (let i = 0; i < chunks.length; i++) {
-    if (chunks.map(x => x[i]).reduce((ax, cx) => ax+cx, 0)) {
+    if (chunks.map(x => x[i]).reduce((ax, cx) => ax+cx, 0) >= threshold) {
       return chunks.map(x => x.slice(i))
     }
   }
@@ -26,9 +27,10 @@ const leftTrim = (chunks) => {
 const leftTrimmed = leftTrim(chunks)
 //[[0,0,0],[1,1,0],[0,0,0],[1,1,0],[0,0,0],[0,0,0]]
 
-const rightTrim = (chunks) => {
+const rightTrim = (chunks, threshold) => {
+  threshold = threshold === undefined ? 1 : threshold
   for (let i = chunks.length - 1; i >= 0; i--) {
-    if (chunks.map(x => x[i]).reduce((ax, cx) => ax+cx, 0)) {
+    if (chunks.map(x => x[i]).reduce((ax, cx) => ax+cx, 0) >= threshold ) {
       return chunks.map(x => x.slice(0, i+1))
     }
   }
@@ -39,9 +41,10 @@ const leftRightTrimmed = rightTrim(leftTrimmed)
 // [[0,0],[1,1],[0,0],[1,1],[0,0],[0,0]]
 
 
-const topTrim = (chunks) => {
+const topTrim = (chunks, threshold) => {
+  threshold = threshold === undefined ? 1 : threshold
   for (let i = 0; i < chunks.length; i++) {
-    if (chunks[i].reduce((ax, cx) => ax+cx, 0)) {
+    if (chunks[i].reduce((ax, cx) => ax+cx, 0) >= threshold) {
       return chunks.slice(i)
     }
   }
@@ -51,9 +54,10 @@ const topTrim = (chunks) => {
 const leftRightTopTrimmed = topTrim(leftRightTrimmed)
 // [[1,1],[0,0],[1,1],[0,0],[0,0]]
 
-const bottomTrim = (chunks) => {
+const bottomTrim = (chunks, threshold) => {
+  threshold = threshold === undefined ? 1 : threshold
   for (let i = chunks.length - 1; i >= 0; i--) {
-    if (chunks[i].reduce((ax, cx) => ax+cx, 0)) {
+    if (chunks[i].reduce((ax, cx) => ax+cx, 0) >= threshold) {
       return chunks.slice(0, i+1)
     }
   }
@@ -62,9 +66,4 @@ const bottomTrim = (chunks) => {
 
 const leftRightTopBottomTrimmed = bottomTrim(leftRightTopTrimmed)
 // [[1,1],[0,0],[1,1]]
-
-
-
-
-
 ```
